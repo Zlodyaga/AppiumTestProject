@@ -1,5 +1,6 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
+import io.qameta.allure.Step;
 import org.example.pages.Pages;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -39,8 +40,8 @@ class CalculatorTest {
         return null;
     }
 
-    @Test
-    void sampleTest() {
+    @Step("Plus test")
+    private int plusTest() {
         pages.calculatorPage().tapToOne();
         pages.calculatorPage().tapToZero();
         pages.calculatorPage().tapToPlus(); // 10 + 23 = 33
@@ -49,9 +50,11 @@ class CalculatorTest {
         pages.calculatorPage().tapToEquals();
 
         pages.calculatorPage().tapToClearAds();
+        return Integer.parseInt(pages.calculatorPage().getResultFromFormula());
+    }
 
-        int plusResult = Integer.parseInt(pages.calculatorPage().getResultFromFormula());
-
+    @Step("Minus test")
+    private double minusTest() {
         pages.calculatorPage().tapToFour();
         pages.calculatorPage().tapToFive();
         pages.calculatorPage().tapToMinus(); // 45 - 6,7 = 38.3
@@ -60,24 +63,40 @@ class CalculatorTest {
         pages.calculatorPage().tapToSeven();
         pages.calculatorPage().tapToEquals();
 
-        double minusResult = Double.parseDouble(pages.calculatorPage().getResultFromFormula());
+        return Double.parseDouble(pages.calculatorPage().getResultFromFormula());
+    }
 
+    @Step("Multiply test")
+    private int multiplyTest() {
         pages.calculatorPage().tapToEight();
         pages.calculatorPage().tapToMultiply(); // 8 * 9 = 72
         pages.calculatorPage().tapToNine();
         pages.calculatorPage().tapToEquals();
 
-        int multiplyResult = Integer.parseInt(pages.calculatorPage().getResultFromFormula());
+        return Integer.parseInt(pages.calculatorPage().getResultFromFormula());
+    }
 
-        pages.calculatorPage().tapToDelete();
-
+    @Step("Divide test")
+    private int divideTest() {
         pages.calculatorPage().tapToSix();
         pages.calculatorPage().tapToDivide(); // 6 / -3 = 2
         pages.calculatorPage().tapToMinus();
         pages.calculatorPage().tapToThree();
         pages.calculatorPage().tapToEquals();
 
-        int divideResult = Integer.parseInt(pages.calculatorPage().getResultFromFormula());
+        return Integer.parseInt(pages.calculatorPage().getResultFromFormula());
+    }
+
+    @Test
+    void sampleTest() {
+        int plusResult = plusTest();
+
+        double minusResult = minusTest();
+        int multiplyResult = multiplyTest();
+
+        pages.calculatorPage().tapToDelete();
+
+        int divideResult = divideTest();
 
         pages.calculatorPage().tapToDelete();
 
