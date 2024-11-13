@@ -7,6 +7,7 @@ public class Pages {
     private static HomePage homePage;
     private static LoginPage loginPage;
     private static AccountPage accountPage;
+    private static NavigationPage navigationPage;
 
     public Pages(AppiumDriver driver) {
         Pages.driver = driver;
@@ -31,5 +32,12 @@ public class Pages {
             accountPage = new AccountPage(driver);
         }
         return accountPage;
+    }
+
+    public static NavigationPage navigationPage() {
+        if (navigationPage == null) {
+            navigationPage = new NavigationPage(driver);
+        }
+        return navigationPage;
     }
 }
