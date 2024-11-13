@@ -6,6 +6,14 @@ import org.example.base.PageTools;
 import org.example.data.Transaction;
 import org.openqa.selenium.By;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import static org.example.utils.DateTime.parseDate;
+
+
 public class AccountPage extends PageTools {
     private static AppiumDriver driver;
 
@@ -65,9 +73,20 @@ public class AccountPage extends PageTools {
         return new Transaction(
                 getAmountTransaction(),
                 getTypeTransaction(),
-                getDateTransaction(),
+                convertDate(getDateTransaction()),
                 getCategoryTransaction(),
                 getNoteTransaction()
         );
+    }
+
+    private static String convertDate(String date) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("MMM. dd, yyyy", Locale.ENGLISH);
+            Date parsedDate = inputFormat.parse(date);
+            return parseDate(parsedDate, "MM/dd/yyyy");
+        } catch (ParseException e) {
+            System.err.println("Error of conversion data: " + e.getMessage());
+            return null;
+        }
     }
 }
