@@ -16,6 +16,7 @@ class TransferTest {
 
     static AppiumDriver driver;
     static Pages pages;
+    static Actions actions;
 
     @BeforeEach
     public void setUp() {
@@ -29,6 +30,7 @@ class TransferTest {
 
         driver = new AppiumDriver(this.getUrl(), options);
         pages = new Pages(driver);
+        actions = new Actions(driver);
     }
 
     private URL getUrl() {
@@ -50,6 +52,12 @@ class TransferTest {
         Pages.accountPage().clickLastTransaction();
         Pages.accountPage().waitForCategoryTransaction();
         System.out.println(Pages.accountPage().getLastTransaction());
+
+        Actions.mainActions().pressBack();
+        Pages.accountPage().waitForLastTransaction();
+        Actions.mainActions().pressBack();
+        Pages.homePage().waitForAccountsWidget();
+        Actions.loginActions().logout();
     }
 
     @AfterEach
